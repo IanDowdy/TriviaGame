@@ -1,0 +1,37 @@
+h1 {
+    
+    font-family: 'Merriweather', serif;
+    font-size: 250px;
+
+}
+
+.card-title, #timer {
+    align-content: center;
+}
+
+.lead, h1 {
+    font-weight: 700;
+}
+
+body {
+    background : url(../assets/images/PokeWall.jpg);
+    background-color: rgba(255,255,255,0.95);
+}
+
+.jumbotron {
+    background: url(../assets/images/PokeWall.jpg);
+    border: thick outset goldenrod; 
+    
+}
+
+.right {
+
+    background-color: green;
+    color: white;
+}
+
+.wrong {
+
+    background-color: red;
+    color: white;
+}
