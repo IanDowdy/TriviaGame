@@ -13,6 +13,13 @@ let questionList = [
         question: 'What is the greatest cereal ever to exist?',
         correct: 'Fruity Pebbles',
         answers: ['Fruity Pebbles', 'Frosted Flakes', 'Fruit Loops', 'Lucky Charms']
+    },
+
+    {
+        questionNumber: '3',
+        question: 'Dr. Pepper is the greatest soda on earth.',
+        correct: 'duh',
+        answers: ['Yes', 'duh', 'Maybe', 'No']
     }
 ];
 
@@ -33,7 +40,9 @@ let correctAnswer = 0;
 let wrongAnswer = 0;
 let ranOutOfTime = 0;
 
-//Timer function.
+
+
+//Timer object function/s??.
 let timer = {
 
     //Variable holding the count.
@@ -64,6 +73,7 @@ let timer = {
         //reset the timer to 3 seconds and run the second clock funtion.
         if (timer.time === 0) {
             timer.stop();
+             $('.lead').text('Come on bro just click something')
             console.log("Time is up homie!");
             ranOutOfTime++;
             
@@ -75,18 +85,19 @@ let timer = {
 
     },
 
-    //this timer 
+    //When the timer reaches 0, stop the clock, take the selection question and push it to the usedQuestion variable,
+    //then remove it from the questionList. run a second if statement that activates if there are no more questions within questionList,
+    //endGame function is then invoked, otherwise run the displayQuestions function.
     decrement2: function () {
         timer.time--;
 
         if (timer.time === 0) {
             timer.stop()
-            console.log('second timer complete');
-            console.log('THe usedQuestions array has ' + usedQuestions.length + ' element(s) in it.')
-            usedQuestions.push(questionList[random])
-            questionList.splice([random], 1)
+           
+            usedQuestions.push(questionList[random]);
+            questionList.splice([random], 1);
             
-            console.log('The usedQuestions array has ' + usedQuestions.length + ' element(s) in it.')
+            console.log('The usedQuestions array has ' + usedQuestions.length + ' element(s) in it.');
             if (questionList.length === 0) {
                 console.log('Game has ended');
                 endGame();
@@ -108,7 +119,7 @@ let timer = {
 
 }
 
-//Starts the game
+//starts the game and hides the start button.
 $('#start').on('click', startGame);
 function startGame() {
     gameStarted = true;
@@ -123,6 +134,8 @@ function startGame() {
 
 //Empties the answer box before selecting another question.
 //Displays question and answers, resets the timer to 10 seconds.
+//gives boolean values to each answerChoice by comparing two values within the question array
+//starts the timer.
 function displayQuestions() {
     $('#answerBlock').empty();
     $('#comment').empty();
@@ -150,8 +163,14 @@ function displayQuestions() {
 }
 
 
+//Runs the check guessfunction when a button on the answerBlock is clicked.
 $('#answerBlock').on('click', '.btn-answer', checkGuess);
 
+
+//using the gameStart if statement helps stop click spamming.
+//stops the timer, takes a variable already established and sets it's value to the property of the answer selected. either true or false.
+//only the correct answer has the true value.
+//true displays a message, tallies the correctAnswer variable, hightlights the correct answer and then activates the second timer.
 function checkGuess() {
 
     if(gameStarted === true){
@@ -163,7 +182,7 @@ function checkGuess() {
         
         if (answerValue === 'true') {
             console.log('boom');
-            $('#comment').html('<h2>RIGHT</h2>');
+            $('.lead').text("Well you're a smart one aren't you?")
             correctAnswer++; 
             $(this).addClass('right');
             timer.run2();
@@ -173,7 +192,7 @@ function checkGuess() {
         if (answerValue === 'false') {
 
             wrongAnswer++;
-            $('#comment').html('<h2>WRONG</h2>')
+            $('.lead').text("Well you're kinda dumb ain't yah?")
             $(this).addClass('wrong');
             timer.run2();
             
@@ -184,6 +203,8 @@ function checkGuess() {
   
 }
 
+
+//resets everything.
 function endGame() {
     $('#comment').empty();
     $('#answerBlock').empty();
@@ -192,6 +213,16 @@ function endGame() {
     console.log('fully ended');
     questionList.push.apply(questionList, usedQuestions)
     usedQuestions = [];
+    $('#answerBlock').html(
+        '<h4> You answered ' + correctAnswer + ' question(s) correctly,</h4>' +
+        '<h4> You answered ' + wrongAnswer + ' question(s) incorrectly,</h4>' +
+        '<h4> You for whatever reason could not figure out how to click ' + ranOutOfTime + ' question(s).</h4>' +
+        '<h4> Press Start to play again!</h4>'
+        
+
+
+
+    )
     
     $('#start').removeClass('invisible');
 

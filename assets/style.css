@@ -16,6 +16,7 @@ h1 {
 body {
     background : url(../assets/images/PokeWall.jpg);
     background-color: rgba(255,255,255,0.95);
+    background-repeat: no-repeat;
 }
 
 .jumbotron {
@@ -34,4 +35,13 @@ body {
 
     background-color: red;
     color: white;
+}
+
+h4 {
+    font-family: 'Baloo Tammudu', cursive;
+    color: #ffd700;
+    background-color: #1ADAA520;
+    text-align: center;
+    
+    
 }
